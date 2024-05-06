@@ -64,9 +64,6 @@ set hidden
 " Rendering.
 set ttyfast
 
-" Status bar.
-set laststatus=2
-
 " Last line.
 set showmode
 set showcmd
@@ -78,11 +75,56 @@ set history=1000
 
 call plug#begin('~/.vim/plugged')
 
-  Plug 'dense-analysis/ale'
-
-  Plug 'preservim/nerdtree'
+Plug 'dense-analysis/ale'
+Plug 'preservim/nerdtree'
 
 call plug#end()
+
+colorscheme molokai
+
+" }}}
+
+" STATUS BAR ----- {{{
+
+" Enable the status line always
+set laststatus=2
+
+" Define a function to get the git branch if available
+function! GetGitBranch()
+  let branchname = system("git rev-parse --abbrev-ref HEAD 2>/dev/null | tr -d '\n'")
+  return (v:shell_error ? '' : '  '.branchname)
+endfunction
+
+function! GetCurrentMode()
+  let modes = {'n': 'NORM', 'i': 'INS', 'v': 'VIS', 'V': 'V-LN', "\<C-v>": 'V-BLK', 'c': 'CMD'}
+  return get(modes, mode()[0], 'UNK')
+endfunction
+
+" Clear status line
+set statusline=
+" Mode
+set statusline+=\ %{GetCurrentMode()}\ >
+" Git branch
+set statusline+=%{GetGitBranch()}\ >
+" Filename and path
+set statusline+=\ %f
+" Modified flag
+set statusline+=%m
+" Readonly flag
+set statusline+=%r
+" Percent through file
+set statusline+=\ (%p%%)
+" Filetype
+set statusline+=\ [%Y]
+
+" Right-aligned items
+set statusline+=%=
+" Encoding
+set statusline+=[%{&fileencoding?&fileencoding:&encoding}
+" File format (unix/dos/mac)
+set statusline+=\ (%{&ff})]
+" Line and column number
+set statusline+=\ Line:%l/%L\ Col:%c
 
 " }}}
 
@@ -122,8 +164,33 @@ endif
 
 augroup cursor_off
   autocmd!
-  autocmd WinLeave * nocursorline
-  autocmd WinEnter * cursorline
+  autocmd WinLeave * set nocursorline
+  autocmd WinEnter * set cursorline
 augroup END
+
+if has('gui_running')
+  set background/dark
+  colorscheme molokai
+  set guifont=Monospace\ Regular\ 12
+  
+  " Hide the toolbar
+  set guioptions-=T
+  " Hide the left-side scroll bar
+  set guioptions-=L
+  " Hide the right-side scroll bar
+  set guioptions-=r
+  " Hide the menu bar
+  set guioptions-=m
+  " Hide the bottom scroll bar
+  set guioptions-=b
+
+  " Map the F4 key to toggle the menu, toolbar and scroll bar
+  nnoremap <F4> :if &guioptions=~#'mTr'<Bar>
+    \set guioptions-=mTr<Bar>
+    \else<Bar>
+    \set guioptions+=mTr<Bar>
+    \endif<CR>
+
+endif
 
 " }}}
