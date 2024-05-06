@@ -1,0 +1,12 @@
+plugged/*
+!plugged/.touch
+
+backup/*
+!backup/.touch
+
+.netrwhist
+*.swp
+*.bak
+*.un~
+Session.vim
+tags
