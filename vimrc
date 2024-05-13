@@ -79,56 +79,59 @@ Plug 'dense-analysis/ale'
 Plug 'preservim/nerdtree'
 Plug 'junegunn/fzf', { 'do': { -> fzf#install() } }
 Plug 'junegunn/fzf.vim'
+Plug 'vim-airline/vim-airline'
+Plug 'vim-airline/vim-airline-themes'
 
 call plug#end()
 
 colorscheme molokai
+let g:airline_powerline_fonts = 1
 
 " }}}
 
-" STATUS BAR ----- {{{
-
-" Enable the status line always
-set laststatus=2
-
-" Define a function to get the git branch if available
-function! GetGitBranch()
-  let branchname = system("git rev-parse --abbrev-ref HEAD 2>/dev/null | tr -d '\n'")
-  return (v:shell_error ? '' : ' '.branchname)
-endfunction
-
-function! GetCurrentMode()
-  let modes = {'n': 'NORM', 'i': 'INS', 'v': 'VIS', 'V': 'V-LN', "\<C-v>": 'V-BLK', 'c': 'CMD'}
-  return get(modes, mode()[0], 'UNK')
-endfunction
-
-" Clear status line
-set statusline=
-" Mode
-set statusline+=\ %{GetCurrentMode()}\ >
-" Git branch
-set statusline+=%{GetGitBranch()}\ >
-" Filename and path
-set statusline+=\ %f
-" Modified flag
-set statusline+=%m
-" Readonly flag
-set statusline+=%r
-" Percent through file
-set statusline+=\ (%p%%)
-" Filetype
-set statusline+=\ [%Y]
-
-" Right-aligned items
-set statusline+=%=
-" Encoding
-set statusline+=[%{&fileencoding?&fileencoding:&encoding}
-" File format (unix/dos/mac)
-set statusline+=\ (%{&ff})]
-" Line and column number
-set statusline+=\ Line:%l/%L\ Col:%c
-
-" }}}
+" " STATUS BAR ----- {{{
+" 
+" " Enable the status line always
+" set laststatus=2
+" 
+" " Define a function to get the git branch if available
+" function! GetGitBranch()
+"   let branchname = system("git rev-parse --abbrev-ref HEAD 2>/dev/null | tr -d '\n'")
+"   return (v:shell_error ? '' : ' '.branchname)
+" endfunction
+" 
+" function! GetCurrentMode()
+"   let modes = {'n': 'NORM', 'i': 'INS', 'v': 'VIS', 'V': 'V-LN', "\<C-v>": 'V-BLK', 'c': 'CMD'}
+"   return get(modes, mode()[0], 'UNK')
+" endfunction
+" 
+" " Clear status line
+" set statusline=
+" " Mode
+" set statusline+=\ %{GetCurrentMode()}\ >
+" " Git branch
+" set statusline+=%{GetGitBranch()}\ >
+" " Filename and path
+" set statusline+=\ %f
+" " Modified flag
+" set statusline+=%m
+" " Readonly flag
+" set statusline+=%r
+" " Percent through file
+" set statusline+=\ (%p%%)
+" " Filetype
+" set statusline+=\ [%Y]
+" 
+" " Right-aligned items
+" set statusline+=%=
+" " Encoding
+" set statusline+=[%{&fileencoding?&fileencoding:&encoding}
+" " File format (unix/dos/mac)
+" set statusline+=\ (%{&ff})]
+" " Line and column number
+" set statusline+=\ Line:%l/%L\ Col:%c
+" 
+" " }}}
 
 " MAPPINGS ----- {{{
 
@@ -146,6 +149,10 @@ nnoremap <c-j> <c-w>j
 nnoremap <c-k> <c-w>k
 nnoremap <c-h> <c-w>h
 nnoremap <c-l> <c-w>l
+
+" Navigate tabs easier
+nnoremap <M-l> gt
+nnoremap <M-h> gT
 
 " Resize split windows easier
 noremap <c-up> <c-w>+
