@@ -77,6 +77,8 @@ call plug#begin('~/.vim/plugged')
 
 Plug 'dense-analysis/ale'
 Plug 'preservim/nerdtree'
+Plug 'junegunn/fzf', { 'do': { -> fzf#install() } }
+Plug 'junegunn/fzf.vim'
 
 call plug#end()
 
@@ -92,7 +94,7 @@ set laststatus=2
 " Define a function to get the git branch if available
 function! GetGitBranch()
   let branchname = system("git rev-parse --abbrev-ref HEAD 2>/dev/null | tr -d '\n'")
-  return (v:shell_error ? '' : '  '.branchname)
+  return (v:shell_error ? '' : ' '.branchname)
 endfunction
 
 function! GetCurrentMode()
@@ -133,6 +135,9 @@ set statusline+=\ Line:%l/%L\ Col:%c
 " Quickly exit INSERT mode
 inoremap cc <Esc>
 
+" Set leader key
+let mapleader = ","
+
 " Press space to type the : character
 nnoremap <space> :
 
@@ -151,6 +156,11 @@ noremap <c-right> <c-w><
 " NERDTree mappings
 " Map F3 to toggle NERDTree open and close
 nnoremap <F3> :NERDTreeToggle<cr>
+
+noremap <silent> <leader>pf :Files<cr>
+noremap <silent> <leader>pb :Buffers<cr>
+noremap <silent> <leader>pp :Rg<cr>
+noremap <silent> <leader>pl :Lines<cr>
 
 " }}}
 
