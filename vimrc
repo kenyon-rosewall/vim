@@ -84,7 +84,10 @@ Plug 'vim-airline/vim-airline-themes'
 
 call plug#end()
 
-colorscheme molokai
+colorscheme onedark
+highlight Normal ctermbg=None
+highlight LineNr ctermfg=DarkGrey
+
 let g:airline_powerline_fonts = 1
 
 " }}}
