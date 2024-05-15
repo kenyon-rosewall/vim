@@ -75,6 +75,7 @@ set history=1000
 
 call plug#begin('~/.vim/plugged')
 
+Plug 'ryanoasis/vim-devicons'
 Plug 'dense-analysis/ale'
 Plug 'preservim/nerdtree'
 Plug 'junegunn/fzf', { 'do': { -> fzf#install() } }
