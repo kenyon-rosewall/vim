@@ -1,3 +1,5 @@
+set runtimepath^=~/.config/vim
+
 " Disable compatibility with vi which can cause unexpected issues.
 set nocompatible
 
@@ -70,6 +72,8 @@ set showcmd
 
 " Set the commands to save in history default number is 20
 set history=1000
+
+set termguicolors
 
 " PLUGINS ----- {{{
 
